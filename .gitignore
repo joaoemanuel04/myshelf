@@ -6,4 +6,6 @@ db.sqlite3
 
 .env
 
+.idea
+db.sqlite3
 
