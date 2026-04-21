@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
-class catalogoView(TemplateView):
-    template_name = 'homecatalogo.html'
+class CatalogoView(TemplateView):
+    template_name = 'catologo/homecatalogo.html'
 
 
