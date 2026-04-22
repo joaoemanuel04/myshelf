@@ -30,6 +30,8 @@ DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.localhost']
 
+AUTH_USER_MODEL = 'catalogo.Usuario'
+
 
 # Application definition
 
@@ -58,7 +60,7 @@ ROOT_URLCONF = 'myshelf.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
