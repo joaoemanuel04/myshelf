@@ -4,7 +4,8 @@ from .models import Filmes, Genero, Avaliacao
 from django.contrib import messages 
 from .urls import *
 from .forms import RegistrarForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as auth_login
 
 class CatalogoView(TemplateView):
     template_name = 'catalogo/homecatalogo.html'
@@ -25,15 +26,16 @@ def registrar(request):
 
 def login_view(request):
     if request.method == 'POST':
-        email_digitado = request.POST.get('email') # Certifique-se que o name no HTML é 'email'
+        email_digitado = request.POST.get('email')
         senha_digitada = request.POST.get('password')
 
-        user = authenticate(request, email=email_digitado, password=senha_digitada)
+        # O backend customizado usa 'username' para o email
+        user = authenticate(request, username=email_digitado, password=senha_digitada)
 
         if user is not None:
-            login(request, user)
+            auth_login(request, user)
             messages.success(request, 'Bem-vindo de volta!')
-            return redirect('registrar') # Para onde ele vai após logar
+            return redirect('registrar')
         else:
             messages.error(request, 'E-mail ou senha incorretos.')
             return redirect('login')
