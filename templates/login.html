@@ -6,6 +6,12 @@
     <title>Template para teste</title>
 </head>
 <body>
+     
+    {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
 
     <h1>Login de Usuário</h1>
     <form method="POST">
