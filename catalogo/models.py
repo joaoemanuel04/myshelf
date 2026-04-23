@@ -1,4 +1,5 @@
-from django.db import models
+from django.db import models 
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 # 1. Gênero 
 class Genero(models.Model):
@@ -33,19 +34,31 @@ class Filmes(models.Model):
         db_table = 'filmes'
 
 # 3. Usuário 
-class Usuario(models.Model):
+class UsuarioManager(BaseUserManager):
+    def create_user(self, email, nickname, password=None, **extra_fields):
+        if not email:
+            raise ValueError('O usuário deve ter um e-mail')
+        user = self.model(email=self.normalize_email(email), nickname=nickname, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+class Usuario(AbstractBaseUser):
     id_usuario = models.AutoField(primary_key=True)
     nome = models.CharField(max_length=100, db_column='Nome')
     email = models.EmailField(max_length=100, unique=True)
-    senha = models.CharField(max_length=128)
     nickname = models.CharField(max_length=45, unique=True, db_column='Nickname')
 
-    def __str__(self):
-        return self.nickname
+ 
+
+    objects = UsuarioManager()
+
+    USERNAME_FIELD = 'email' # O que ele vai usar para logar
+    REQUIRED_FIELDS = ['nome']
 
     class Meta:
         db_table = 'usuario'
-
+        
 # 4. Avaliação
 class Avaliacao(models.Model):
     id_avaliacao = models.AutoField(primary_key=True)
