@@ -1,6 +1,7 @@
-from django.db import models
+from django.db import models 
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-# 1. Gênero
+
+# 1. Gênero 
 class Genero(models.Model):
     id_genero = models.AutoField(primary_key=True)
     nome = models.CharField(max_length=45, db_column='Nome')
@@ -51,14 +52,16 @@ class Usuario(AbstractBaseUser):
     # O campo password já vem embutido no AbstractBaseUser, 
     # por isso não precisamos declarar o campo 'senha' manualmente.
 
+ 
+
     objects = UsuarioManager()
 
     USERNAME_FIELD = 'email' # O que ele vai usar para logar
-    REQUIRED_FIELDS = ['nickname', 'nome']
+    REQUIRED_FIELDS = ['nome']
 
     class Meta:
         db_table = 'usuario'
-
+        
 # 4. Avaliação
 class Avaliacao(models.Model):
     id_avaliacao = models.AutoField(primary_key=True)

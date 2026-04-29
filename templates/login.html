@@ -1,24 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Template para teste</title>
+    <title>Login - MyShelf</title>
+    <link rel="stylesheet" href="/templates/estilo_css/login.css">
 </head>
 <body>
+    <header class="cabeçalho">
+        <div class="container_cabeçalho">
+            <div class="logo">
+                <img src="/images/logo.png" alt="MyShelf Logo">
+            </div>
+            <nav class="menu">
+                <ul>
+                    <li><a href="base.html" class="nav-link">Home</a></li>
+                    <li><a href="registrar.html" class="nav-link">Registrar</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    <h1>Login de Usuário</h1>
-    <form method="POST">
-        {% csrf_token %}
-        <label>E-mail:</label><br>
-        <input type="email" name="email" required><br><br>
+    <section class="conteudo">
+        <h1 class="titulo">Entrar no MyShelf</h1>
 
-        <label>Senha:</label><br>
-        <input type="password" name="password" required><br><br>
+        <div class="login-card">
+            <form method="POST" class="login-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input id="email" type="email" name="email" required placeholder="seu@exemplo.com">
+                </div>
 
-        <button type="submit">Login</button>
-    </form>
-    <br>
-    
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input id="password" type="password" name="password" required placeholder="********">
+                </div>
+
+                <button type="submit" class="btn-primary">Entrar</button>
+                <p class="login-footer">Ainda não tem conta? <a href="registrar.html">Registre-se</a></p>
+            </form>
+        </div>
+    </section>
 </body>
 </html>
