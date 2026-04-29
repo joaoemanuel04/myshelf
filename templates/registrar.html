@@ -20,6 +20,18 @@
             </nav>
         </div>
     </header>
+    
+    {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <h1>Cadastro de Usuário</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label>Nome:</label><br>
+        <input type="text" name="nome" required><br><br>
 
     <section class="conteudo">
         <h1 class="titulo">Registrar no MyShelf</h1>

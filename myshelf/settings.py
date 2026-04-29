@@ -123,3 +123,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Configurar o modelo de usuário customizado
+AUTH_USER_MODEL = 'catalogo.Usuario'
+
+# Backend de autenticação customizado para email
+AUTHENTICATION_BACKENDS = [
+    'catalogo.backends.EmailBackend',
+]

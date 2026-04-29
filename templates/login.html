@@ -20,6 +20,12 @@
             </nav>
         </div>
     </header>
+     
+    {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
 
     <section class="conteudo">
         <h1 class="titulo">Entrar no MyShelf</h1>
