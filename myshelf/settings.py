@@ -124,6 +124,13 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# Configurações django para conseguir carregar e adicionar elementos estáticos
+STATICFILES_DIRS = [BASE_DIR /'static']
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+
 # Configurar o modelo de usuário customizado
 AUTH_USER_MODEL = 'catalogo.Usuario'
 
