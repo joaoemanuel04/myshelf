@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 
 class CatalogoView(TemplateView):
-    template_name = 'catalogo/homecatalogo.html'
+    template_name = 'home.html'
 
 def registrar(request):
     if request.method == 'POST':
