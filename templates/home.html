@@ -1,16 +1,17 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tela home</title>
-    <link rel="stylesheet" href="/templates/estilo_css/style_home.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style_home.css' %}">
 </head>
 <body>
     <header class="cabeçalho">
         <div class="container_cabeçalho">
             <div class="logo">
-                <img src="/images/logo.png" alt="MyShelf Logo">
+                <img src="{% static 'assets/logo.png' %}" alt="MyShelf Logo">
             </div>
             <nav class="menu">
                 <ul>

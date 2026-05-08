@@ -1,16 +1,17 @@
+{% load static %} <!--Carregamento de elementos estáticos de estilo-->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - MyShelf</title>
-    <link rel="stylesheet" href="/templates/estilo_css/login.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}"/> <!--Localização do arquivo css de login-->
 </head>
 <body>
     <header class="cabeçalho">
         <div class="container_cabeçalho">
             <div class="logo">
-                <img src="/images/logo.png" alt="MyShelf Logo">
+                <img src="{% static 'assets/logo.png' %}" alt="MyShelf Logo"> <!--Localização do arquivo assets da logo-->
             </div>
             <nav class="menu">
                 <ul>
