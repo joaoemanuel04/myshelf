@@ -6,9 +6,20 @@ from .urls import *
 from .forms import RegistrarForm
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
+from django.http import HttpResponse
 
-class CatalogoView(TemplateView):
-    template_name = 'home.html'
+def home_antes_do_login(request):
+    try:
+        return render(request, 'base.html')
+    except Exception as e:
+        return HttpResponse(f"Erro ao carregar a página inicial.  Erro em: {str(e)}.")
+
+def home_depois_do_login(request):
+    try:
+        return render(request, 'home.html')
+    except Exception as e:
+        return HttpResponse(f"Erro ao carregar a página inicial.  Erro em: {str(e)}.")
+
 
 def registrar(request):
     if request.method == 'POST':
