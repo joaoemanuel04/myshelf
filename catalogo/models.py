@@ -48,6 +48,9 @@ class Usuario(AbstractBaseUser):
     nome = models.CharField(max_length=100, db_column='Nome')
     email = models.EmailField(max_length=100, unique=True)
     nickname = models.CharField(max_length=45, unique=True, db_column='Nickname')
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
     
     # O campo password já vem embutido no AbstractBaseUser, 
     # por isso não precisamos declarar o campo 'senha' manualmente.
@@ -58,6 +61,18 @@ class Usuario(AbstractBaseUser):
 
     USERNAME_FIELD = 'email' # O que ele vai usar para logar
     REQUIRED_FIELDS = ['nome']
+    
+    def has_perm(self, perm, obj=None):
+        """Check if the user has a specific permission"""
+        if self.is_active and self.is_superuser:
+            return True
+        return False
+    
+    def has_module_perms(self, app_label):
+        """Check if user has any permissions for a module"""
+        if self.is_active and self.is_superuser:
+            return True
+        return False
 
     class Meta:
         db_table = 'usuario'
