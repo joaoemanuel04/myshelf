@@ -27,6 +27,15 @@
 
             <button type="submit">Favoritar Filme</button>
         </form>
+
+         <form action="{% url 'remover_filmes_favoritos' %}" method="POST">
+            {% csrf_token %}
+
+            <label for="filme-id">ID do Filme (verifique no Admin):</label>
+            <input type="number" name="filme-id" id="filme-id" required placeholder="Ex: 1">
+
+            <button type="submit">Remover filme dos favoritos</button>
+        </form>
     </fieldset>
 
     <br><br>

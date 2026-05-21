@@ -77,6 +77,28 @@ def adicionar_filmes_favoritos(request):
             return redirect('listar_filmes_favoritos')
     
     return render(request, 'filmes_favoritos.html')
+
+def remover_filmes_favoritos(request): 
+    if request.method == 'POST':
+        filme_id = request.POST.get('filme-id')
+        try:
+            usuario = request.user
+            id_usuario = usuario.id_usuario
+
+            favorito = FilmesFavoritos.objects.get(filme_id=filme_id, usuario_id=id_usuario)
+            favorito.delete()
+
+            messages.success(request, 'Filme removido dos favoritos com sucesso!')
+            return redirect('listar_filmes_favoritos')
+        except FilmesFavoritos.DoesNotExist:
+            messages.error(request, 'Filme favorito não encontrado.')
+            return redirect('listar_filmes_favoritos')
+        except Exception as e:
+            messages.error(request, f'Erro ao remover filme dos favoritos: {str(e)}')
+            return redirect('listar_filmes_favoritos')
+
+    
+    return render(request, 'filmes_favoritos.html')
         
 
 def registrar(request):
