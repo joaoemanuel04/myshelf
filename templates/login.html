@@ -15,8 +15,13 @@
             </div>
             <nav class="menu">
                 <ul>
-                    <li><a href="{% url 'home_depois_do_login' %}" class="nav-link">Home</a></li>
-                    <li><a href="{% url 'registrar' %}" class="nav-link">Registrar</a></li>
+                    {% if user.is_authenticated %}
+                        <li><span class="nav-link">Bem-vindo, {{ user.nome }}</span></li>
+                        <li><a href="{% url 'logout' %}" class="nav-link" style="color: red; font-weight: bold;">Sair</a></li>
+                    {% else %}
+                        <li><a href="{% url 'home_antes_do_login' %}" class="nav-link">Home</a></li>
+                        <li><a href="{% url 'registrar' %}" class="nav-link">Registrar</a></li>
+                    {% endif %}
                 </ul>
             </nav>
         </div>

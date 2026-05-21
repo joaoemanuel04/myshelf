@@ -6,6 +6,8 @@ from .urls import *
 from .forms import RegistrarForm
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
 def home_antes_do_login(request):
@@ -53,13 +55,14 @@ def avaliar_filme(request):
     
     return render(request, 'avaliar_filme.html', {'filmes': filmes})
 
+@login_required(login_url='login')
 def listar_filmes_favoritos(request):
     filmes = Filmes.objects.all().order_by('nome') # Trazendo os filmes do banco de dados para a view de forma ordenada.
     return render(request, 'filmes_favoritos.html', {'filmes': filmes})
 
+@login_required(login_url='login')
 def adicionar_filmes_favoritos(request): 
     if request.method == 'POST':
-
         filme_id = request.POST.get('filme-id')
         try:
             usuario = request.user
@@ -76,8 +79,10 @@ def adicionar_filmes_favoritos(request):
             messages.error(request, f'Erro ao adicionar filme aos favoritos: {str(e)}')
             return redirect('listar_filmes_favoritos')
     
-    return render(request, 'filmes_favoritos.html')
+    filmes = Filmes.objects.all().order_by('nome')
+    return render(request, 'filmes_favoritos.html', {'filmes': filmes})
 
+@login_required(login_url='login')
 def remover_filmes_favoritos(request): 
     if request.method == 'POST':
         filme_id = request.POST.get('filme-id')
@@ -97,8 +102,8 @@ def remover_filmes_favoritos(request):
             messages.error(request, f'Erro ao remover filme dos favoritos: {str(e)}')
             return redirect('listar_filmes_favoritos')
 
-    
-    return render(request, 'filmes_favoritos.html')
+    filmes = Filmes.objects.all().order_by('nome')
+    return render(request, 'filmes_favoritos.html', {'filmes': filmes})
         
 
 def registrar(request):
@@ -132,6 +137,25 @@ def login_view(request):
             return redirect('login')
 
     return render(request, 'login.html')
+
+def logout_view(request):
+    """View de logout - destrói a sessão do usuário"""
+    logout(request)
+    messages.success(request, 'Você foi deslogado com sucesso!')
+    return redirect('home_antes_do_login')
+
+def debug_auth(request):
+    """View de debug para verificar o estado da autenticação"""
+    return HttpResponse(f"""
+    <h1>DEBUG DE AUTENTICAÇÃO</h1>
+    <p><strong>request.user:</strong> {request.user}</p>
+    <p><strong>request.user.is_authenticated:</strong> {request.user.is_authenticated}</p>
+    <p><strong>request.user.id:</strong> {request.user.id if hasattr(request.user, 'id') else 'N/A'}</p>
+    <p><strong>Tipo do usuário:</strong> {type(request.user)}</p>
+    <p><strong>Session Key:</strong> {request.session.session_key}</p>
+    <hr>
+    <a href="/">Voltar</a>
+    """)
 
 
 

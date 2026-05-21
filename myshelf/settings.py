@@ -53,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'catalogo.middleware.DebugAuthMiddleware',  # Middleware de debug
 ]
 
 ROOT_URLCONF = 'myshelf.urls'
@@ -138,3 +139,6 @@ AUTH_USER_MODEL = 'catalogo.Usuario'
 AUTHENTICATION_BACKENDS = [
     'catalogo.backends.EmailBackend',
 ]
+
+# URL para redirecionamento de login (padrão global)
+LOGIN_URL = 'login'
