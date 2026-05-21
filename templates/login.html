@@ -1,0 +1,58 @@
+{% load static %} <!--Carregamento de elementos estáticos de estilo-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - MyShelf</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}"/> <!--Localização do arquivo css de login-->
+</head>
+<body>
+    <header class="cabeçalho">
+        <div class="container_cabeçalho">
+            <div class="logo">
+                <img src="{% static 'assets/logo.png' %}" alt="MyShelf Logo"> <!--Localização do arquivo assets da logo-->
+            </div>
+            <nav class="menu">
+                <ul>
+                    {% if user.is_authenticated %}
+                        <li><span class="nav-link">Bem-vindo, {{ user.nome }}</span></li>
+                        <li><a href="{% url 'logout' %}" class="nav-link" style="color: red; font-weight: bold;">Sair</a></li>
+                    {% else %}
+                        <li><a href="{% url 'home_antes_do_login' %}" class="nav-link">Home</a></li>
+                        <li><a href="{% url 'registrar' %}" class="nav-link">Registrar</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+     
+    {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <section class="conteudo">
+        <h1 class="titulo">Entrar no MyShelf</h1>
+
+        <div class="login-card">
+            <form method="POST" class="login-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input id="email" type="email" name="email" required placeholder="seu@exemplo.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input id="password" type="password" name="password" required placeholder="********">
+                </div>
+
+                <button type="submit" class="btn-primary">Entrar</button>
+                <p class="login-footer">Ainda não tem conta? <a href="{% url 'registrar' %}">Registre-se</a></p>
+            </form>
+        </div>
+    </section>
+</body>
+</html>

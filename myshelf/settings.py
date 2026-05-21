@@ -30,6 +30,8 @@ DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.localhost']
 
+AUTH_USER_MODEL = 'catalogo.Usuario'
+
 
 # Application definition
 
@@ -51,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'catalogo.middleware.DebugAuthMiddleware',  # Middleware de debug
 ]
 
 ROOT_URLCONF = 'myshelf.urls'
@@ -58,7 +61,7 @@ ROOT_URLCONF = 'myshelf.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -121,3 +124,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Configurações django para conseguir carregar e adicionar elementos estáticos
+STATICFILES_DIRS = [BASE_DIR /'static']
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+
+# Configurar o modelo de usuário customizado
+AUTH_USER_MODEL = 'catalogo.Usuario'
+
+# Backend de autenticação customizado para email
+AUTHENTICATION_BACKENDS = [
+    'catalogo.backends.EmailBackend',
+]
+
+# URL para redirecionamento de login (padrão global)
+LOGIN_URL = 'login'

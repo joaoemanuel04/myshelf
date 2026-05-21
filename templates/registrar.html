@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar - MyShelf</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+</head>
+<body>
+    <header class="cabeçalho">
+        <div class="container_cabeçalho">
+            <div class="logo">
+                <img src="{% static 'assets/logo.png' %}" alt="MyShelf Logo">
+            </div>
+            <nav class="menu">
+                <ul>
+                    <li><a href="base.html" class="nav-link">Home</a></li>
+                    <li><a href="registrar.html" class="nav-link">Registrar</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <section class="conteudo">
+        <h1 class="titulo">Registrar no MyShelf</h1>
+
+        <div class="login-card">
+            <form method="POST" class="login-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="nome">Nome</label>
+                    <input id="nome" type="text" name="nome" required placeholder="Seu nome completo">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input id="email" type="email" name="email" required placeholder="seu@exemplo.com">
+                </div>
+
+                 <div class="form-group">
+                    <label for="nickname">Nickname</label>
+                    <input id="nickname" type="text" name="nickname" required placeholder="Seu nickname">
+                </div>
+
+                 <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input id="password" type="password" name="password" required placeholder="********">
+                </div>
+
+                <button type="submit" class="btn-primary">Cadastrar</button>
+                <p class="login-footer">Ainda não tem conta? <a href="login.html">Faça login</a></p>
+            </form>
+        </div>
+    </section>
+</body>
+</html>
