@@ -1,10 +1,12 @@
 from django.urls import path
-from .views import registrar, login_view, home_antes_do_login, home_depois_do_login, avaliar_filme
+from .views import registrar, login_view, home_antes_do_login, home_depois_do_login, avaliar_filme, listar_filmes_favoritos, adicionar_filmes_favoritos
 
 urlpatterns = [
     path('', home_antes_do_login, name='home_antes_do_login'),
     path('home/', home_depois_do_login, name='home_depois_do_login'),
     path('registrar/', registrar, name='registrar'),
     path('login/', login_view, name='login'),
-    path('avaliacao/', avaliar_filme, name='avaliar-filme'),
+    path('avaliacao/', avaliar_filme, name='avaliar_filme'),
+    path('filmes_favoritos/', listar_filmes_favoritos, name='listar_filmes_favoritos'),
+    path('adicionar_filmes_favoritos/', adicionar_filmes_favoritos, name='adicionar_filmes_favoritos'),
 ]

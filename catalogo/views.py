@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
-from .models import Filmes, Genero, Avaliacao
+from .models import Filmes, Genero, Avaliacao, FilmesFavoritos
 from django.contrib import messages 
 from .urls import *
 from .forms import RegistrarForm
@@ -52,6 +52,31 @@ def avaliar_filme(request):
         return redirect('home_depois_do_login')
     
     return render(request, 'avaliar_filme.html', {'filmes': filmes})
+
+def listar_filmes_favoritos(request):
+    filmes = Filmes.objects.all().order_by('nome') # Trazendo os filmes do banco de dados para a view de forma ordenada.
+    return render(request, 'filmes_favoritos.html', {'filmes': filmes})
+
+def adicionar_filmes_favoritos(request): 
+    if request.method == 'POST':
+
+        filme_id = request.POST.get('filme-id')
+        try:
+            usuario = request.user
+            id_usuario = usuario.id_usuario
+
+            FilmesFavoritos.objects.create(
+                filme_id=filme_id,
+                usuario_id=id_usuario
+            )
+
+            messages.success(request, 'Filme adicionado aos favoritos com sucesso!')
+            return redirect('listar_filmes_favoritos')
+        except Exception as e:
+            messages.error(request, f'Erro ao adicionar filme aos favoritos: {str(e)}')
+            return redirect('listar_filmes_favoritos')
+    
+    return render(request, 'filmes_favoritos.html')
         
 
 def registrar(request):
@@ -79,7 +104,7 @@ def login_view(request):
         if user is not None:
             auth_login(request, user)
             messages.success(request, 'Bem-vindo de volta!')
-            return redirect('registrar')
+            return redirect('home_depois_do_login')
         else:
             messages.error(request, 'E-mail ou senha incorretos.')
             return redirect('login')

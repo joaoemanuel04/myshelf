@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Teste - Filmes Favoritos</title>
+</head>
+<body>
+
+    <h1>Minha Lista de Filmes</h1>
+
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li style="color: blue; font-weight: bold;">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <<h2/h2>
+    <fieldset>
+        <legend>Simular: Adicionar Filme aos Favoritos</legend>
+        <form action="{% url 'adicionar_filmes_favoritos' %}" method="POST">
+            {% csrf_token %}
+
+            <label for="filme-id">ID do Filme (verifique no Admin):</label>
+            <input type="number" name="filme-id" id="filme-id" required placeholder="Ex: 1">
+
+            <button type="submit">Favoritar Filme</button>
+        </form>
+    </fieldset>
+
+    <br><br>
+
+    <h2>Todos os Filmes do Sistema</h2>
+    {% if filmes %}
+        <table border="1" cellpadding="5">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Ano</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for filme in filmes %}
+                    <tr>
+                        <td>{{ filme.id_filmes }}</td>
+                        <td>{{ filme.nome }}</td>
+                        <td>{{ filme.ano }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3">Nenhum filme encontrado no banco de dados.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>A lista de filmes veio vazia ou o contexto não foi passado corretamente.</p>
+    {% endif %}
+
+</body>
+</html>
