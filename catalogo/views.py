@@ -163,8 +163,16 @@ def debug_auth(request):
     <p><strong>Session Key:</strong> {request.session.session_key}</p>
     <hr>
     <a href="/">Voltar</a>
-    """)
+""")
+def buscar_filme(request):
+    global resultados_filmes
+    if request.method == "GET":
+        filme_procurado = request.GET.get('nome', )
 
+        if filme_procurado:
+            resultados_filmes = Filmes.objects.filter(nome__icontains=filme_procurado)
+        else:
+            resultados_filmes = Filmes.objects.all()
 
-
- 
+    return render(request, 'filmes_filmes.html', {'filmes': resultados_filmes})
+            

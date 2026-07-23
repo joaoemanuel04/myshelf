@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testar Busca de Filmes</title>
+</head>
+<body>
+    <h1>Buscar Filme</h1>
+
+    <!-- O formulário usa o método GET, enviando o dado pela URL (ex: ?nome=Avatar) -->
+    <form method="GET" action="">
+        <label for="nome">Nome do filme:</label>
+        <!-- O atributo 'name' DEVE ser 'nome' para bater com o seu request.GET.get('nome') -->
+        <input type="text" id="nome" name="nome" placeholder="Digite o nome do filme...">
+        <button type="submit">Buscar</button>
+        <a href="?"><button type="button">Limpar Busca</button></a>
+    </form>
+
+    <hr>
+
+    <h2>Resultados:</h2>
+    <ul>
+        <!-- O laço itera sobre o dicionário {'filmes': resultados_filmes} que a view enviou -->
+        {% for filme in filmes %}
+            <li>
+                <strong>{{ filme.nome }}</strong> - Ano: {{ filme.ano }}
+            </li>
+        {% empty %}
+            <li>Nenhum filme encontrado com esse nome.</li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>
