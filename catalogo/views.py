@@ -155,4 +155,4 @@ def debug_auth(request):
     <p><strong>Session Key:</strong> {request.session.session_key}</p>
     <hr>
     <a href="/">Voltar</a>
-    """)
+""")
