@@ -156,7 +156,3 @@ def debug_auth(request):
     <hr>
     <a href="/">Voltar</a>
     """)
-
-
-
- 
