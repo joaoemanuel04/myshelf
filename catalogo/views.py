@@ -12,13 +12,21 @@ from django.http import HttpResponse
 
 def home_antes_do_login(request):
     try:
-        return render(request, 'base.html')
+        # Buscamos todos os filmes (ou limitamos os primeiros para o carrossel não ficar gigante)
+        filmes = Filmes.objects.all().order_by('-id_filmes')[:5] # Pega os 5 últimos adicionados
+        
+        # Passamos a lista de filmes dentro do dicionário de contexto
+        return render(request, 'base.html', {'filmes': filmes})
     except Exception as e:
-        return HttpResponse(f"Erro ao carregar a página inicial.  Erro em: {str(e)}.")
+        return HttpResponse(f"Erro ao carregar a página inicial. Erro em: {str(e)}.")
 
 def home_depois_do_login(request):
     try:
-        return render(request, 'home.html')
+        # Buscamos todos os filmes (ou limitamos os primeiros para o carrossel não ficar gigante)
+        filmes = Filmes.objects.all().order_by('-id_filmes')[:5] # Pega os 5 últimos adicionados
+        
+        # Passamos a lista de filmes dentro do dicionário de contexto
+        return render(request, 'home.html', {'filmes': filmes})
     except Exception as e:
         return HttpResponse(f"Erro ao carregar a página inicial.  Erro em: {str(e)}.")
 
@@ -156,3 +164,15 @@ def debug_auth(request):
     <hr>
     <a href="/">Voltar</a>
 """)
+def buscar_filme(request):
+    global resultados_filmes
+    if request.method == "GET":
+        filme_procurado = request.GET.get('nome', )
+
+        if filme_procurado:
+            resultados_filmes = Filmes.objects.filter(nome__icontains=filme_procurado)
+        else:
+            resultados_filmes = Filmes.objects.all()
+
+    return render(request, 'filmes_filmes.html', {'filmes': resultados_filmes})
+            

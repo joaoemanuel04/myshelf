@@ -5,9 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tela home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css"  href="{% static 'css/style_home.css' %}">
 </head>
 <body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <header class="cabeçalho">
         <div class="container_cabeçalho">
             <div class="logo">
@@ -34,6 +36,37 @@
             <p>Organize seus filmes favoritos em um só lugar. Explore, adicione e compartilhe suas coleções de filmes com facilidade. Descubra novos títulos e mantenha sua paixão pelo cinema sempre viva com o MyShelf!</p>
         </div>
 
+        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                {% for filme in filmes %}
+                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                        {% if filme.url_capa %}
+                            <img src="{{ filme.url_capa }}" class="d-block w-100" alt="{{ filme.nome }}" style="object-fit: cover; height: 450px;">
+                        {% else %}
+                            <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500" class="d-block w-100" alt="Sem capa" style="object-fit: cover; height: 450px;">
+                        {% endif %}
+                        
+                        <div class="carousel-caption d-none d-md-block" style="background: rgba(0, 0, 0, 0.6); border-radius: 8px;">
+                            <h5>{{ filme.nome }}</h5>
+                            <p>{{ filme.ano }}</p>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="carousel-item active">
+                        <p class="text-center">Nenhum filme disponível no catálogo.</p>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Próximo</span>
+            </button>
+        </div>
         <div class="movie-grid" aria-label="Grade de filmes">
             <!-- Aqui você pode adicionar os cards dos filmes ou os elementos da grade -->
         </div>
